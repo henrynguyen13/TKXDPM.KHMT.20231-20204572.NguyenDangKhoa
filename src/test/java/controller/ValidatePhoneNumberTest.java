@@ -19,12 +19,16 @@ class ValidatePhoneNumberTest {
 
     @ParameterizedTest
     @CsvSource({
-            "Nguyen Dang Khoa, true",
-            "Nguyen1 Dang Khoa, false",
+            "0978014692, true",
+            "1345582394, false",
+            "097801469, false",
+            "04859der2, false",
             " , false",
     })
     public void test(String name, boolean expected) {
-        boolean isValid = placeOrderController.validateName(name);
+        boolean isValid = placeOrderController.validatePhoneNumber(name);
         assertEquals(expected, isValid);
     }
+
+
 }
