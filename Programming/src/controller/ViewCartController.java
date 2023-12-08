@@ -20,14 +20,6 @@ public class ViewCartController extends BaseController {
         Cart.getCart().checkAvailabilityOfProduct();
     }
 
-    /**
-     * This method calculates the cart subtotal
-     *
-     * @return subtotal
-     */
-    public int getCartSubtotal() {
-        int subtotal = Cart.getCart().calSubtotal();
-        return subtotal;
-    }
+
 
 }

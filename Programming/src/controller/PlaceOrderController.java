@@ -164,7 +164,38 @@ public class PlaceOrderController extends BaseController {
 //        return fees;
 //    }
 
-    public int calculateShippingFee(double price, double weight, String address, int quantityOfProductRushShipping){
+//    public int calculateShippingFee(double price, double weight, String address, int quantityOfProductRushShipping){
+//
+//        if (price > 100) {
+//            return 0;
+//        }
+//
+//        double baseCost = 0;
+//        double baseWeight = 0;
+//        double additionalCostPerHalfKg = 0;
+//        if (address.toLowerCase().contains("hà nội") || address.toLowerCase().contains("hồ chí minh")) {
+//            baseCost = 22;
+//            baseWeight = 3;
+//            additionalCostPerHalfKg = 2.5;
+//        } else {
+//            baseCost = 30;
+//            baseWeight = 0.5;
+//            additionalCostPerHalfKg = 2.5;
+//        }
+//
+//        double rushShippingCost = 10 * quantityOfProductRushShipping;
+//        double regularShippingCost = 0;
+//
+//        if(weight <= baseWeight){
+//            regularShippingCost = baseCost;
+//        }
+//        else{
+//            regularShippingCost = baseCost + Math.ceil((weight - baseWeight) * 2) * additionalCostPerHalfKg;
+//        }
+//
+//        return (int) (rushShippingCost + regularShippingCost);
+//    }
+    public int calculateShippingFee(double price, double weight, String address, Order order){
 
         if (price > 100) {
             return 0;
@@ -182,8 +213,22 @@ public class PlaceOrderController extends BaseController {
             baseWeight = 0.5;
             additionalCostPerHalfKg = 2.5;
         }
+        double rushShippingCost = 0;
 
-        double rushShippingCost = 10 * quantityOfProductRushShipping;
+        if (order != null) {
+            for (Object object : order.getlstOrderMedia()) {
+                OrderMedia orderMedia = (OrderMedia) object;
+                Media media = orderMedia.getMedia();
+
+
+                if (media.getIsSupportedPlaceRushOrder()) {
+                    int quantityOfProductRushShipping = orderMedia.getQuantity();
+                     rushShippingCost = 10 * quantityOfProductRushShipping;
+
+                }
+
+            }
+        }
         double regularShippingCost = 0;
 
         if(weight <= baseWeight){
@@ -234,4 +279,7 @@ public class PlaceOrderController extends BaseController {
             return true;
         return false;
     }
+
+
+
 }

@@ -41,6 +41,8 @@ public class DeliveryMethodsScreenHandler extends BaseScreenHandler {
     @FXML
     private Button updateDeliveryMethodInfoButton;
 
+
+
     public DeliveryMethodsScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
         super(stage, screenPath);
         this.order = order;

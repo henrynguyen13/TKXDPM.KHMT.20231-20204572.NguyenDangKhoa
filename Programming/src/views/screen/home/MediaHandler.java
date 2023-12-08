@@ -38,32 +38,44 @@ public class MediaHandler extends FXMLScreenHandler {
     private Media media;
     private HomeScreenHandler home;
 
+    private int initialQuantity;
     public MediaHandler(String screenPath, Media media, HomeScreenHandler home) throws SQLException, IOException {
         super(screenPath);
         this.media = media;
         this.home = home;
+        this.initialQuantity = media.getQuantity();
+
         addToCartBtn.setOnMouseClicked(event -> {
             try {
+                initialQuantity = initialQuantity - spinnerChangeNumber.getValue();
+                // subtract the quantity and redisplay
+
+
+                if (initialQuantity < 0) {
+                    // Handle the case where the quantity becomes negative (if needed)
+                    initialQuantity = 0;
+                    throw new MediaNotAvailableException();
+                }
                 if (spinnerChangeNumber.getValue() > media.getQuantity()) throw new MediaNotAvailableException();
                 Cart cart = Cart.getCart();
-                // if media already in cart then we will increase the quantity by 1 instead of create the new cartMedia
                 CartMedia mediaInCart = home.getBController().checkMediaInCart(media);
                 if (mediaInCart != null) {
-                    mediaInCart.setQuantity(mediaInCart.getQuantity() + 1);
+                    mediaInCart.setQuantity(mediaInCart.getQuantity() + spinnerChangeNumber.getValue());
                 } else {
                     CartMedia cartMedia = new CartMedia(media, cart, spinnerChangeNumber.getValue(), media.getPrice());
                     cart.getListMedia().add(cartMedia);
                     LOGGER.info("Added " + cartMedia.getQuantity() + " " + media.getTitle() + " to cart");
                 }
 
-                // subtract the quantity and redisplay
-                media.setQuantity(media.getQuantity() - spinnerChangeNumber.getValue());
-                mediaAvail.setText(String.valueOf(media.getQuantity()));
+
+                media.setQuantity(initialQuantity);
+                mediaAvail.setText(String.valueOf(initialQuantity));
+                LOGGER.info("total media: " + cart.getTotalMedia());
                 home.getNumMediaCartLabel().setText(String.valueOf(cart.getTotalMedia() + " media"));
                 PopupScreen.success("The media " + media.getTitle() + " added to Cart");
             } catch (MediaNotAvailableException exp) {
                 try {
-                    String message = "Not enough media:\nRequired: " + spinnerChangeNumber.getValue() + "\nAvail: " + media.getQuantity();
+                    String message = "Not enough media:\nRequired: " + spinnerChangeNumber.getValue() + "\nAvail: 0" ;
                     LOGGER.severe(message);
                     PopupScreen.error(message);
                 } catch (Exception e) {
