@@ -1,6 +1,7 @@
 package test;
 
 import controller.PlaceOrderController;
+import entity.order.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,8 +30,8 @@ class CalculateShippingFeeTest {
             "110000, 0.5, 'Tam Đảo, Vĩnh Phúc', 2, 0",
     })
 
-    public void test(double price, double weight, String address, int quantityOfProductRushShipping, double expected) {
-        int shippingFee = placeOrderController.calculateShippingFee(price, weight, address, quantityOfProductRushShipping);
+    public void test(double price, double weight, String address, Order order, double expected) {
+        int shippingFee = placeOrderController.calculateShippingFee(price, weight, address, order);
         assertEquals(expected, shippingFee);
     }
 }
