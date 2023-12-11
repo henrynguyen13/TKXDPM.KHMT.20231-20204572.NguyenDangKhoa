@@ -97,8 +97,8 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 
 
 
-        province.valueProperty().addListener((observable, oldValue, newValue) -> updateShippingFeeAndAmount());
-        address.textProperty().addListener((observable, oldValue, newValue) -> updateShippingFeeAndAmount());
+        province.valueProperty().addListener((observable, oldValue, newValue) -> updateShippingFeeAndAmount(newValue));
+        address.textProperty().addListener((observable, oldValue, newValue) -> updateShippingFeeAndAmount(newValue));
 
     }
     /**
@@ -173,8 +173,8 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
     }
 
 
-    private void updateShippingFeeAndAmount() {
-
+    private void updateShippingFeeAndAmount(String province) {
+        order.setProvince(province);
         // Calculate shipping fees
         int shippingFees = getBController().calculateShippingFee(order.getAmount(), order.getQuantity() * 0.5, address.toString(), order);
         order.setShippingFees(shippingFees);
