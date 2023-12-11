@@ -12,8 +12,13 @@ public class Order {
     private List lstOrderMedia;
     private HashMap<String, String> deliveryInfo;
 
+    public void setProvince(String province){
+        deliveryInfo.put("province", province);
+    }
+
     public Order() {
         this.lstOrderMedia = new ArrayList<>();
+        this.deliveryInfo = new HashMap<>();
     }
 
     public Order(List lstOrderMedia) {
@@ -69,7 +74,7 @@ public class Order {
     /**
      * @return HashMap
      */
-    public HashMap getDeliveryInfo() {
+    public HashMap<String, String> getDeliveryInfo() {
         return deliveryInfo;
     }
 

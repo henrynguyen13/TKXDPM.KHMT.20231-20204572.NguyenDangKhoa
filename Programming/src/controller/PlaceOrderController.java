@@ -197,6 +197,8 @@ public class PlaceOrderController extends BaseController {
 //    }
     public int calculateShippingFee(double price, double weight, String address, Order order){
 
+        String province = order.getDeliveryInfo().get("province");
+
         if (price > 100) {
             return 0;
         }
@@ -204,7 +206,7 @@ public class PlaceOrderController extends BaseController {
         double baseCost = 0;
         double baseWeight = 0;
         double additionalCostPerHalfKg = 0;
-        if (address.toLowerCase().contains("hà nội") || address.toLowerCase().contains("hồ chí minh")) {
+        if (province.toLowerCase().contains("hà nội") || province.toLowerCase().contains("hồ chí minh")) {
             baseCost = 22;
             baseWeight = 3;
             additionalCostPerHalfKg = 2.5;
