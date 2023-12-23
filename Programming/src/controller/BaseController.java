@@ -33,4 +33,14 @@ public class BaseController {
     public List getListCartMedia() {
         return Cart.getCart().getListMedia();
     }
+
+    /**
+     * This method calculates the cart subtotal
+     *
+     * @return subtotal
+     */
+    public int getCartSubtotal() {
+        int subtotal = Cart.getCart().calSubtotal();
+        return subtotal;
+    }
 }

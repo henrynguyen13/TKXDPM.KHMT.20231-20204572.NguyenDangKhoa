@@ -5,8 +5,13 @@ import controller.PaymentController;
 import entity.invoice.Invoice;
 import entity.order.OrderMedia;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import subsystem.VnPaySubsystem;
@@ -15,18 +20,29 @@ import utils.Utils;
 import views.screen.BaseScreenHandler;
 import views.screen.payment.PaymentScreenHandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class InvoiceScreenHandler extends BaseScreenHandler {
 
     private static Logger LOGGER = Utils.getLogger(InvoiceScreenHandler.class.getName());
+    @FXML
+    private GridPane fastShippingList;
 
     @FXML
+    private Label shipmentDetail;
+    @FXML
+    private Label deliveryInstruction;
+    @FXML
+    private Label deliveryTime;
+    @FXML
     private Label pageTitle;
-
+    @FXML
+    private ImageView aimsImage;
     @FXML
     private Label name;
 
@@ -35,7 +51,8 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
 
     @FXML
     private Label province;
-
+    @FXML
+    private Label shippingMethod;
     @FXML
     private Label address;
 
@@ -58,8 +75,20 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
 
     public InvoiceScreenHandler(Stage stage, String screenPath, Invoice invoice) throws IOException {
         super(stage, screenPath);
+        File file = new File("assets/images/Logo.png");
+        Image im = new Image(file.toURI().toString());
+        aimsImage.setImage(im);
+
+        // on mouse clicked, we back to home
+        aimsImage.setOnMouseClicked(e -> {
+            homeScreenHandler.show();
+        });
         this.invoice = invoice;
         setInvoiceInfo();
+        fastShippingList.setVisible(false);
+        if(shippingMethod.getText().contains("Fast Delivery")) {
+            fastShippingList.setVisible(true);
+        }
     }
 
     private void setInvoiceInfo() {
@@ -68,6 +97,11 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
         province.setText(deliveryInfo.get("province"));
         instructions.setText(deliveryInfo.get("instructions"));
         address.setText(deliveryInfo.get("address"));
+        shippingMethod.setText(deliveryInfo.get("shippingMethod"));
+        shipmentDetail.setText(deliveryInfo.get("shipmentDetail"));
+        deliveryInstruction.setText(deliveryInfo.get("deliveryInstruction"));
+        deliveryTime.setText(deliveryInfo.get("deliveryTime"));
+
         subtotal.setText(Utils.getCurrencyFormat(invoice.getOrder().getAmount()));
         shippingFees.setText(Utils.getCurrencyFormat(invoice.getOrder().getShippingFees()));
         int amount = invoice.getOrder().getAmount() + invoice.getOrder().getShippingFees();
@@ -84,6 +118,7 @@ public class InvoiceScreenHandler extends BaseScreenHandler {
             }
 
         });
+
 
     }
 

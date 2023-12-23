@@ -142,6 +142,8 @@ public class CartScreenHandler extends BaseScreenHandler {
             ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
             ShippingScreenHandler.setScreenTitle("Shipping Screen");
             ShippingScreenHandler.setBController(placeOrderController);
+
+            ShippingScreenHandler.updateCartAmount();
             ShippingScreenHandler.show();
 
         } catch (MediaNotAvailableException e) {
