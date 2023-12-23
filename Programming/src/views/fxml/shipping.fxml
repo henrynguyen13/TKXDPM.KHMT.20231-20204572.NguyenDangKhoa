@@ -3,13 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
@@ -29,15 +32,16 @@
         </ImageView>
         <GridPane layoutX="75.0" layoutY="96.0" prefHeight="561.0" prefWidth="941.0" AnchorPane.bottomAnchor="111.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="96.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.2" minWidth="0.0" prefWidth="196.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="843.2" minWidth="0.0" prefWidth="843.2" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="0.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="0.0" prefWidth="600.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="108.60001220703126" minHeight="10.0" prefHeight="63.999996948242185" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="168.5999969482422" minHeight="10.0" prefHeight="64.40000610351564" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="313.59999389648436" minHeight="10.0" prefHeight="67.19997558593752" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="292.80002441406253" minHeight="10.0" prefHeight="72.39998168945311" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="311.8000549316406" minHeight="8.0" prefHeight="258.80001831054693" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="108.60001220703126" minHeight="10.0" prefHeight="67.20001220703125" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="168.5999969482422" minHeight="10.0" prefHeight="73.199951171875" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="313.59999389648436" minHeight="10.0" prefHeight="74.00004882812499" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="292.80002441406253" minHeight="10.0" prefHeight="72.00004882812499" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="319.7999755859375" minHeight="8.0" prefHeight="160.60001220703128" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="311.8000549316406" minHeight="10.0" prefHeight="124.60002441406255" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0">
@@ -57,7 +61,7 @@
                         </Label>
                     </children>
                 </Pane>
-                <TextField fx:id="name" prefHeight="50.0" prefWidth="759.0" promptText="(a-zA-Z)" GridPane.columnIndex="1">
+                <TextField fx:id="name" prefHeight="50.0" prefWidth="705.0" promptText="(a-zA-Z)" GridPane.columnIndex="1">
                     <font>
                         <Font name="Segoe UI" size="24.0" />
                     </font>
@@ -107,7 +111,7 @@
                 </Pane>
                 <Pane prefHeight="170.0" prefWidth="190.0" GridPane.rowIndex="4">
                     <children>
-                        <Label layoutX="3.0" layoutY="90.0" text="Shipping&#10;Instructions">
+                        <Label layoutX="16.0" layoutY="45.0" text="Shipping&#10;Instructions">
                             <font>
                                 <Font name="Segoe UI" size="24.0" />
                             </font>
@@ -133,6 +137,29 @@
                         </Label>
                     </children>
                 </Pane>
+            <Pane prefHeight="123.0" prefWidth="467.0" GridPane.rowIndex="5">
+               <children>
+                  <Label fx:id="shippingMethod" layoutX="22.0" layoutY="33.0" text="Shipping&#10;Methods">
+                     <font>
+                        <Font name="Segoe UI" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <RadioButton fx:id="normalShipping" mnemonicParsing="false" style="-fx-padding: 10;" text="Normal Delivery">
+                     <font>
+                        <Font name="Segoe UI" size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="fastShipping" mnemonicParsing="false" style="-fx-padding: 10;" text="Fast Delivery">
+                     <font>
+                        <Font name="Segoe UI" size="24.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
             </children>
         </GridPane>
         <Button fx:id="btnConfirmDelivery" alignment="CENTER" contentDisplay="CENTER" layoutX="1010.0" layoutY="661.0" mnemonicParsing="false" onMouseClicked="#submitDeliveryInfo" prefHeight="46.0" prefWidth="316.0" style="-fx-background-color: #5091e6; -fx-cursor: hand;" text="Confirm delivery" textFill="WHITE">
@@ -140,7 +167,7 @@
                 <Font name="Segoe UI Bold" size="24.0" />
             </font>
         </Button>
-      <GridPane hgap="2.0" layoutX="1042.0" layoutY="462.0" minWidth="-Infinity" vgap="5.0">
+      <GridPane hgap="2.0" layoutX="1016.0" layoutY="489.0" minWidth="-Infinity" vgap="5.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -190,6 +217,46 @@
             <Label fx:id="labelAmount" minWidth="-Infinity" text="100000 VND" textFill="#f80202" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutX="964.0" fx:id="shippingListView" layoutY="99.0" prefHeight="338.0" prefWidth="375.0" style="-fx-background-color: #ffffff; -fx-border-radius: 16; -fx-padding: 16;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.0" minWidth="10.0" prefWidth="336.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.5333251953125" minWidth="0.0" prefWidth="0.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Shipment Details" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="shipmentDetail" prefHeight="46.0" prefWidth="248.0" GridPane.rowIndex="2" />
+            <Label text="Delivery Instructions" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="deliveryInstruction" prefHeight="46.0" prefWidth="251.0" GridPane.rowIndex="4" />
+            <Label text="Delivery Time" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="deliveryTime" prefHeight="54.0" prefWidth="244.0" GridPane.rowIndex="6" />
+            <Label text="FAST DELIVERY">
+               <font>
+                  <Font size="18.0" />
                </font>
             </Label>
          </children>
