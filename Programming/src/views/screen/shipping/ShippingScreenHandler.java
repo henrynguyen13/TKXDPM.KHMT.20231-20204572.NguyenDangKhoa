@@ -8,12 +8,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import utils.Configs;
 import utils.Utils;
@@ -26,12 +25,30 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 public class ShippingScreenHandler extends BaseScreenHandler implements Initializable {
+    private static Logger LOGGER = Utils.getLogger(ShippingScreenHandler.class.getName());
+    @FXML
+    private RadioButton normalShipping;
+    private String selectedShippingMethod;
 
+    @FXML
+    private TextField shipmentDetail;
+    @FXML
+    private TextField deliveryInstruction;
+    @FXML
+    private DatePicker deliveryTime;
+    @FXML
+    private RadioButton fastShipping;
+
+    @FXML
+    private GridPane shippingListView;
+
+    private ToggleGroup shippingToggleGroup;
     @FXML
     private Label screenTitle;
 
@@ -94,12 +111,44 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
             }
         });
         this.province.getItems().addAll(Configs.PROVINCES);
+        // Initialize the toggle group for radio buttons
+        shippingToggleGroup = new ToggleGroup();
+        normalShipping.setToggleGroup(shippingToggleGroup);
+        fastShipping.setToggleGroup(shippingToggleGroup);
 
+        shippingToggleGroup.selectToggle(normalShipping);
 
-
+        shippingToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                handleShippingMethodChange((RadioButton) newValue);
+            }
+        });
+        selectedShippingMethod = normalShipping.getText();
+        shippingListView.setVisible(false);
         province.valueProperty().addListener((observable, oldValue, newValue) -> updateShippingFeeAndAmount(newValue));
         address.textProperty().addListener((observable, oldValue, newValue) -> updateShippingFeeAndAmount(newValue));
 
+    }
+
+    private void handleShippingMethodChange(RadioButton selectedRadioButton) {
+        LOGGER.info("Province" + province.getValue());
+
+
+        if (selectedRadioButton == fastShipping && (province.getValue() == null || !province.getValue().contains("Hà Nội"))) {
+            // Show error popup for fast shipping not applicable
+            showErrorPopup("Địa điểm bạn chọn không áp dụng giao hàng nhanh");
+            // Reset selection to NormalShipping
+            shippingToggleGroup.selectToggle(normalShipping);
+            shippingListView.setVisible(false);
+        } else {
+            shippingListView.setVisible(true);
+            selectedShippingMethod = selectedRadioButton.getText();
+        }
+    }
+
+    private void showErrorPopup(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.showAndWait();
     }
     /**
      * @param event
@@ -117,6 +166,11 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
         messages.put("address", address.getText());
         messages.put("instructions", instructions.getText());
         messages.put("province", province.getValue());
+        messages.put("shippingMethod", selectedShippingMethod);
+        messages.put("shipmentDetail", shipmentDetail.getText());
+        messages.put("deliveryInstruction", deliveryInstruction.getText());
+        messages.put("deliveryTime", LocalDate.parse(deliveryTime.getValue().toString()).toString());
+
 
         try {
             // process and validate delivery info
@@ -140,12 +194,12 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
         InvoiceScreenHandler.show();
 
         //create delivery method screen
-        BaseScreenHandler DeliveryMethodsScreenHandler = new DeliveryMethodsScreenHandler(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);
-        DeliveryMethodsScreenHandler.setPreviousScreen(this);
-        DeliveryMethodsScreenHandler.setHomeScreenHandler(homeScreenHandler);
-        DeliveryMethodsScreenHandler.setScreenTitle("Delivery method screen");
-        DeliveryMethodsScreenHandler.setBController(getBController());
-        DeliveryMethodsScreenHandler.show();
+//        BaseScreenHandler DeliveryMethodsScreenHandler = new DeliveryMethodsScreenHandler(this.stage, Configs.DELIVERY_METHODS_PATH, this.order);
+//        DeliveryMethodsScreenHandler.setPreviousScreen(this);
+//        DeliveryMethodsScreenHandler.setHomeScreenHandler(homeScreenHandler);
+//        DeliveryMethodsScreenHandler.setScreenTitle("Delivery method screen");
+//        DeliveryMethodsScreenHandler.setBController(getBController());
+//        DeliveryMethodsScreenHandler.show();
     }
 
     /**
