@@ -12,6 +12,8 @@ Tài liệu gồm có đầy đủ các nội dung:
 7. Programming - Đã tích hợp thanh toán VNPay, có video demo chương trình.
 8. Link video demo: <https://www.youtube.com/watch?v=UGS5vVp03ys>
 
+## Lời cảm ơn
+- Em xin chân thành cảm ơn cô giáo Nguyễn Thị Thu Trang và anh Lê Thanh Giang đã nhiệt tình chỉ dạy và hướng dẫn để em có thể hoàn thành bài tập lớn lần này một cách tốt nhất.
 ## Creators
 
 **Nguyễn Đăng Khoa**
