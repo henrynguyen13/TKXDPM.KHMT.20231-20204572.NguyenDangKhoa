@@ -10,6 +10,7 @@ Tài liệu gồm có đầy đủ các nội dung:
 5. Assignment 4 - Data modeling
 6. Assignment 5 - Test unit
 7. Programming - Đã tích hợp thanh toán VNPay, có video demo chương trình.
+8. Link video demo: <https://www.youtube.com/watch?v=UGS5vVp03ys>
 
 ## Creators
 
