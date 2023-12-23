@@ -169,7 +169,7 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
         messages.put("shippingMethod", selectedShippingMethod);
         messages.put("shipmentDetail", shipmentDetail.getText());
         messages.put("deliveryInstruction", deliveryInstruction.getText());
-        messages.put("deliveryTime", LocalDate.parse(deliveryTime.getValue().toString()).toString());
+        messages.put("deliveryTime", deliveryTime.getValue() != null ?LocalDate.parse(deliveryTime.getValue().toString()).toString(): "");
 
 
         try {
